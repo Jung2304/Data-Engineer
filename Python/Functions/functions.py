@@ -507,11 +507,62 @@ print(f"Employee {name} works for {company}, position: {dept}!")
 """
 #!SECTION
 
+#!SECTION
+
 #SECTION MULTI-THREADING
+"""
+< If we have a function, and we want to run it 10 times
+< The loop run in sequence (slow), what if we want to run it ALL TOGETHER PARALLELLY
+< Multi-threading creates multi-thread so that we can process simultaneously
 
+! If we run all data tables all together -> Faster 
+"""
 
+#ANCHOR - Multi-threading
+"""
+import time
+import random
+from concurrent.futures import ThreadPoolExecutor     #< Best module to perform multi-threading
 
+tables = ["orders", "products", "customers", "reviews", "cancels"]
+
+#! Without multi-threading
+def my_func(i):
+
+  wait = random.randint(1, 10)
+  time.sleep(wait)       # halt the function in random(1,10) second
+  print(f"Table {i} took {wait} seconds to run")
+
+for i in tables:
+  my_func(i)
+
+#! With multi-threading 
+
+#> max_workers = the length of the list. So that we can individually run the tables
+with ThreadPoolExecutor(max_workers=len(tables)) as executor:
+  futures = executor.map(my_func, tables)    
+"""
+#!SECTION
+
+#SECTION - REQUESTS (API)
+"""
+< API is the middleman between you and the application from where you're trying to fetch the data.
+"""
+
+#ANCHOR - Dummy JSON
+"""
+import requests
+
+response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+data = response.json()
+
+print(data)
+print(f"Status code: {response.status_code}")
+
+< response.json()
+Decodes the JSON response body as a Python object.
+This may return a dictionary, list, etc. depending on what is in the response.
+"""
 #!SECTION
 
 
-#!SECTION
