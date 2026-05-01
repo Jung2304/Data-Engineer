@@ -206,7 +206,7 @@ emp1.info()
 
 class Employee():
 
-  #< Static methods not realate to any class's attributes, class's methods,... -> Doesn't need self 
+  #< Static methods not relate to any class's attributes, class's methods,... -> Doesn't need "self" 
   @staticmethod           #> tell Python this is static method
   def addition(x, y):
     print(x + y)
