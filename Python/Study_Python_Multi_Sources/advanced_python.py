@@ -79,7 +79,6 @@ def my_decorator(func):
     response = func(*args, **kwargs)
     print("After calling the function")
     return response
-  
   return mainfunc
 
 @my_decorator
@@ -88,6 +87,31 @@ def fetch_data(url:str, path:str):
 
 response = fetch_data("https://api.example.com/data", "/tmp/data.json")
 print(response)
+"""
+
+#ANCHOR - DECORATORS-V2
+"""
+#< Decorator = A function that extends the behavior of another function without modifying the base function
+#< Pass the base function as an argument to the decorator
+
+def add_sprinkles(func):
+  def wrapper(*args, **kwargs):
+    print("You add sprinkles")
+    func(*args, **kwargs)
+  return wrapper
+
+def add_fudge(func):
+  def wrapper(*args, **kwargs):
+    print("You add fudge")
+    func(*args, **kwargs)
+  return wrapper
+
+@add_sprinkles
+@add_fudge
+def get_ice_cream(flavor):
+  print(f"Here is your {flavor} ice cream")
+
+get_ice_cream("vanilla")
 """
 #!SECTION
 
@@ -324,12 +348,10 @@ response = requests.get(url, auth=HTTPBasicAuth('username', 'password'))
 """
 #!SECTION
 
-#SECTION - PyTest 
-
+#ANCHOR - PyTest
+"""
 #< PyTest = công cụ test Python
 #< Dễ viết (assert), tự động phát hiện test
-
-#ANCHOR - PyTest
 
 def weather_check(temp:float)->str:         #> input:float, returns (->) string
   if temp < 0:
@@ -340,7 +362,119 @@ def weather_check(temp:float)->str:         #> input:float, returns (->) string
     return "The weather is pleasant."
   else:
     return "It's hot outside!"
+"""
+
+#ANCHOR - Match-case
+"""
+def is_weekened(day):
+  match day:
+    case "Saturday" | "Sunday":
+      return True
+    case "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday":
+      return False
+    case _:
+      return False
+
+print(is_weekened("Sunday"))
+print(is_weekened("Friday"))
+"""
+
+#NOTE - Scope resolution
+"""
+#! LEGB: Local -> Enclosed -> Global -> Built-in
+#< Built-in variables are imported
+"""
+
+#ANCHOR - if __name__ == "__main__" statement
+"""
+- It means this script can be imported OR run standalone 
+- Function and classes in this module can be reused in other programs without the main block of code executing 
+- Good practice:
++ Code is modular
++ Helps readability
++ Leave no global variables
++ Avoid unintended execution
+! For example:
+- Import library functionality (Math module)  
+- If not included the statement, running library directly will display a help page
+"""
+
+#SECTION - ADVANCED POLYMORPHISM
+
+#NOTE - 2 Ways To Achieve Polymorphism
+"""
+- Polymorphism means to "have many forms or faces"
+1. Inheritance = An object could be treated of the same type a parent class
+2. "Duck typing" = Object must have necessary attributes/methods
+"""
+
+#ANCHOR - Inheritance way
+"""
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+  
+  @abstractmethod
+  def area(self):
+    pass
+
+class Circle(Shape):
+  def __init__(self, radius):
+    self.radius = radius
+
+  def area(self):
+    return 3.14 * (self.radius ** 2)
+
+class Square(Shape):  
+  def __init__(self, side):
+    self.side = side
+
+  def area(self):
+    return (self.side ** 2)
+
+class Triangle(Shape):
+  def __init__(self, base, height):
+    self.base = base
+    self.height = height
+
+  def area(self):
+    return self.base * self.height * 0.5
+
+shape = [Circle(4), Square(5), Triangle(6, 7)]
+
+for shape in shape:
+  print(f"{shape.area()}cm^2") 
+"""
+
+#ANCHOR - Duck Typing
+"""
+- "Duck typing" = Another way to achieve polymorphism besides Inheritance 
+- Object must have the minimum necessary attributes/methods
+- "If it looks like a duck and quacks like a duck, it must be a duck."
+
+class Animal():
+  alive = True
+
+class Dog(Animal):
+  def speak(self):
+    print("WOOF!")
+
+class Cat(Animal):
+  def speak(self):
+    print("MEOW!")
+
+class Car:            # Car is not a living creature but meets the minimum necessary requirements to be considered an animal
+  def speak(self):
+    print("HONK!")
+  alive = False
+
+animals = [Dog(), Cat(), Car()]
+
+for animal in animals:
+  animal.speak()
+  print(animal.alive)
+"""
+  
 
 
 #!SECTION
-

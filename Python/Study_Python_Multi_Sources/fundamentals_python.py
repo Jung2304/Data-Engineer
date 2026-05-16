@@ -31,6 +31,9 @@ print(var)
 
 #SECTION - EXCEPTION HANDLING
 
+#! Exception = An event that interrupts the flow of a program (ZeroDivisionError, TypeError, ValueError)
+#< 1. try / 2. except / 3. finally
+
 #ANCHOR - Normal way
 """
 #< try-except method
@@ -61,18 +64,6 @@ except Exception as e:        #> e is the error, using the Exception method
 
 print("Hello, World")
 """
-#!SECTION
-
-#ANCHOR - F-string
-"""
-name = "Jung"
-age = "20"
-
-print(f"Hello. My name is {name}. I'm {age} years old!")
-
-price = 123.456789
-print(f"Price: {price:.2f}")        #< 2 số sau dấu phẩy
-"""
 
 #ANCHOR - Finally
 """
@@ -89,6 +80,18 @@ except Exception as e:
 
 finally:
   print("This will run no matter what")
+"""
+#!SECTION
+
+#ANCHOR - F-string
+"""
+name = "Jung"
+age = "20"
+
+print(f"Hello. My name is {name}. I'm {age} years old!")
+
+price = 123.456789
+print(f"Price: {price:.2f}")        #< 2 số sau dấu phẩy
 """
 
 #ANCHOR - Return command
@@ -158,7 +161,7 @@ print(f"Hi. My name is {emp1._emp_name}. I'm currently working at {emp1._emp_dep
 emp1.info()     # Python tự truyền self khi gọi từ instance
 """
 
-#ANCHOR - Constructor 
+#ANCHOR - CONSTRUCTOR
 """
 #< Constructor always runs when we create new object
 
@@ -238,35 +241,45 @@ emp1.changesInClass("New Company")
 print(emp1.company_name)
 """
 
-#ANCHOR - Getters & Setters (Concept)
+#ANCHOR - Magic Methods
 """
-#< Getters: Return the values (Get the values)
-#< Setters: Set the instance attributes
+#< Dunder methods (double underscore) __init__, __str__, __eq__, __gt__, __lt__, __add__, __contains__, __getitem__(self, key)
+#< They are automatically called by many of Python's built-in operations.
+#< They allow developers to define or customize the behavior of objects.
 
-class Employee():
+#! Example 1
+class Student:
   
-  def __init__(self, emp_name, emp_dept):
-    self.emp_name = emp_name
-    self.emp_dept = emp_dept
+  def __init__(self, name, gpa):
+    self.name = name
+    self.gpa = gpa
 
-  #< Getter
-  def showInfo(self):
-    print(f"Employee Name: {self.emp_name}")
-    print(f"Employee Department: {self.emp_dept}")
+  def __str__(self):                #> string
+    return f"name: {self.name} gpa: {self.gpa}"
 
-  #< Setter
-  def setInfo(self, new_emp, new_dept):
-    self.emp_name = new_emp
-    self.emp_dept = new_dept
+  def __eq__(self, other):          #> equal
+    return self.name == other.name
+  
+  def __gt__(self, other):          #> greater than
+    return self.gpa > other.gpa 
+  
+student1 = Student("Spongebob", 3.2)
+student2 = Student("Patrick", 2.0)
 
-emp1 = Employee("Jung", "Data")
-emp1.showInfo()
-
-emp1.setInfo("JungNg", "DataEngineer")
-emp1.showInfo()
+print(student1)
+print(student1 == student2)
+print(student1 > student2)
 """
 
-#ANCHOR - Getters & Setters (In Python)
+#SECTION - PROPERTY
+"""
+#< @property = Decorator used to define a method as a property (it can be accessed like an attribute)
+#< Benefit: Add additional logic when read, write, or delete attributes
+#< Gives you getter, setter, and deleter method
+#< Protected, Private attributes (_name)
+"""
+
+#ANCHOR - Getters & Setters 
 """
 #< Getter returns a tuple, so we past in Setter a tuple or a list
 #! Turn method to attribute
@@ -299,6 +312,64 @@ print(f"Employee {name} works at {dept}")
 emp1.info = ("JungNg", "DataEngineer")
 print(emp1.info)
 """
+
+#ANCHOR - Deleter
+"""
+class Rectangle:
+  def __init__(self, width, height):
+    self._width = width
+    self._height = height
+  
+  @property
+  def width(self):
+    return f"{self._width:.1f}cm"
+
+  @property
+  def height(self):
+    return f"{self._height:.1f}cm"
+
+  @width.setter
+  def width(self, new_width):
+    if new_width > 0:
+      self._width = new_width
+    else:
+      print("Width must be greater than zero")
+
+  @height.setter
+  def height(self, new_height):
+    if new_height > 0:
+      self._height = new_height
+    else:
+      print("Height must be greater than zero")
+
+  @width.deleter
+  def width(self):
+    del self._width
+    print("Width has been deleted")
+
+  @height.deleter
+  def height(self):
+    del self._height
+    print("Height has been deleted")
+
+rectangle1 = Rectangle(3, 4)
+
+#< Setter
+rectangle1.width = 6
+rectangle1.height = 7
+
+#< Getter
+height = rectangle1.height
+width = rectangle1.width
+print(f"The height is {height}")
+print(f"The width is {width}")
+
+#< Deleter
+del rectangle1.width
+del rectangle1.height
+"""
+#!SECTION
+
 #!SECTION
 
 #SECTION INHERITANCE (SINGLE, MULTILEVEL, MULTIPLE)
