@@ -1,0 +1,60 @@
+---------------------------
+-- ROUND-ROBIN DISTRIBUTION
+---------------------------
+
+CREATE TABLE round_table 
+(
+    id INT,
+    name VARCHAR(50),
+    salary DECIMAL(10,2)
+)
+WITH
+(
+    DISTRIBUTION = ROUND_ROBIN
+);
+
+INSERT INTO dbo.round_table (id, name, salary)
+SELECT 1, 'Alice', 55000
+UNION ALL 
+SELECT 2, 'Bob', 62000
+UNION ALL 
+SELECT 3, 'Charlie', 48000
+UNION ALL 
+SELECT 4, 'David', 71000
+UNION ALL 
+SELECT 5, 'Emma', 59000
+UNION ALL 
+SELECT 6, 'Frank', 68000
+UNION ALL 
+SELECT 7, 'Grace', 52000
+UNION ALL 
+SELECT 8, 'Henry', 75000
+UNION ALL 
+SELECT 9, 'Ivy', 61000
+UNION ALL 
+SELECT 10, 'Jack', 57000
+UNION ALL 
+SELECT 11, 'Karen', 66000
+UNION ALL 
+SELECT 12, 'Leo', 49000
+UNION ALL 
+SELECT 13, 'Mia', 73000
+UNION ALL 
+SELECT 14, 'Noah', 54000
+UNION ALL 
+SELECT 15, 'Olivia', 69000
+UNION ALL 
+SELECT 16, 'Peter', 51000
+UNION ALL 
+SELECT 17, 'Quinn', 63000
+UNION ALL 
+SELECT 18, 'Rachel', 58000
+UNION ALL 
+SELECT 19, 'Sam', 72000
+UNION ALL 
+SELECT 20, 'Tom', 60000;
+
+SELECT * 
+FROM dbo.round_table
+
+DBCC PDW_SHOWSPACEUSED("dbo.round_table");
