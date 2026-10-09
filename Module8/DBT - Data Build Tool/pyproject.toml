@@ -1,0 +1,20 @@
+[project]
+name = "dbt-data-build-tool"
+version = "0.1.0"
+description = "First dbt project"
+readme = "README.md"
+authors = [
+    { name = "JungNguyen", email = "minhdung38109141@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "dbt-core>=1.12.5",
+    "dbt-databricks>=1.12.6",
+]
+
+[project.scripts]
+dbt-data-build-tool = "dbt_data_build_tool:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"

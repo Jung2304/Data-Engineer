@@ -1,0 +1,11 @@
+jung_dbt:
+  outputs:
+    dev:
+      catalog: dbt_tutorial_dev
+      host: dbc-ff77887e-59a5.cloud.databricks.com
+      http_path: /sql/1.0/warehouses/38bb01e91c43fcbc
+      schema: default
+      threads: 1
+      token: dapi4911f517ca37d346b989d58fdb404564
+      type: databricks
+  target: dev
