@@ -1,7 +1,7 @@
 sources:
   - name: source
-    database: dbt_tutorial_dev        
-    schema: source 
+    database: '{{ target.catalog }}'
+    schema: source
     tables:
       - name: dim_customer
       - name: dim_date
