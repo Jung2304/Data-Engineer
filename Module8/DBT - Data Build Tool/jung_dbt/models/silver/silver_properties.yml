@@ -1,0 +1,10 @@
+models:
+  - name: silver_returns          # Must match the filename of a model -- including case sensitivity.
+    config:
+      materialized: table
+      schema: silver
+
+  - name: silver_sales          
+    config:
+      materialized: table
+      schema: silver

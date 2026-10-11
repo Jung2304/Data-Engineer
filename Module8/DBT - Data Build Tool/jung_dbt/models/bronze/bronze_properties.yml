@@ -1,0 +1,56 @@
+models:
+  - name: bronze_date          # Must match the filename of a model -- including case sensitivity.
+    config:
+      materialized: view
+      schema: bronze 
+    columns:
+      - name: date_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: month_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+  - name: bronze_product
+    config:
+      materialized: view
+      schema: bronze
+    columns:
+      - name: product_sk
+        data_tests:
+          - unique
+          - not_null
+  
+  - name: bronze_sales
+    columns:
+      - name: sales_id
+        data_tests: 
+          - unique
+          - not_null
+      - name: gross_amount
+        data_tests:
+          - generic_non_negative
+
+  - name: bronze_store
+    columns:
+      - name: store_sk
+        data_tests: 
+          - unique
+          - not_null
+      - name: store_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['MegaMart Manhattan', 'MegaMart Brooklyn', 'MegaMart Austin', 'MegaMart San Jose', 'MegaMart Toronto']
+              config:
+                severity: warn
+      - name: country
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['USA', 'Canada']
+              config:
+                severity: warn
